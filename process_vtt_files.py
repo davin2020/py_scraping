@@ -7,6 +7,7 @@ import os
 # finds timestamps in the format - 00:00:19.850
 TIMESTAMP_REGEX = "^\d\d:\d\d:\d\d\.\d\d\d"
 # REGEX_2 = "^.*$"
+# remove number in format from 1 to 9999
 NUMBER_REGEX = "^[0-9]{1,4}$"
 # ^[0-9]{1,3}$
 
@@ -18,7 +19,7 @@ NUMBER_REGEX = "^[0-9]{1,4}$"
 # Using readlines()
 # TODO get filenames from a certain folder ie process all the fiels in a given folder
 # NEXT try this against Trauma Conf files tha ti cant watch, but can get VTT for 
-FOLDER = "misc_test"
+FOLDER = "test_process"
 
 ext = ('.vtt', '.txt')
 
@@ -29,11 +30,14 @@ ext = ('.vtt', '.txt')
 
 
 
-def proces_vtt(filename):
-
-	INPUT_FILENAME = FOLDER + "/" + filename
+def proces_vtt(my_filename):
+	print("my_filename :: ", my_filename)
+	INPUT_FILENAME = FOLDER + "/" + my_filename
 	# TODO change processed filename to .txt 
-	OUTPUT_FILENAME = FOLDER + "/" +  "Processed_" + filename
+	(just_filename, ext) = os.path.splitext(my_filename)
+	print("filename without ext : ", just_filename)
+	
+	OUTPUT_FILENAME = FOLDER + "/" +  "Processed_" + just_filename + ".txt"
 	print("\n")
 	print("filename INPUT_FILENAME ",  INPUT_FILENAME)
 	print("filename OUTPUT_FILENAME ",  OUTPUT_FILENAME)
@@ -106,6 +110,7 @@ def proces_vtt(filename):
 
 	# output_file.writelines(input_lines)
 	print("processed vtt file and saved output to txt file")
+	print("output filename: ", OUTPUT_FILENAME)
 	input_file.close()
 	output_file.close()
 
@@ -118,9 +123,12 @@ def proces_vtt(filename):
 for filename in os.listdir(FOLDER):
 	# nd filename.extension == ".vtt":
 	# TODO - how to exclude "Procssed" files?
-	if filename.endswith(ext):
+	# ext = ('.vtt', '.txt')
+	if filename.endswith(".vtt"):
+		# (just_filename, ext) = os.path.splitext(filename)
+		# print("filename without ext : ", just_filename)
 		proces_vtt(filename)
-		print("processed file: ", filename)
+		# print("processed file: ", just_filename)
     # if filename.is_file():
     #     print(filename.path)
     #     print(filename.extension)
