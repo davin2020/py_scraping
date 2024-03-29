@@ -3,6 +3,7 @@ import re
 
 # "[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?"
 # MY_REGEX = "[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})"
+# finds timestamps in the format - 00:00:19.850
 MY_REGEX = "^\d\d:\d\d:\d\d\.\d\d\d"
 
 
@@ -13,7 +14,10 @@ def use_regex(input_text):
 # Using readlines()
 # TODO get filenames from a certain folder ie process all the fiels in a given folder
 # NEXT try this against Trauma Conf files tha ti cant watch, but can get VTT for 
-FILENAME = "HRT_Conf_Day4_Lee Harbour_141751067.vtt"
+folder = "to_process"
+
+# FILENAME = "HRT_Conf_Day4_Lee Harbour_141751067.vtt"
+FILENAME = "short_HRT_day1_melissa_ramos.vtt"
 # FILENAME = "HRT_Conf_Day4_test.txt"
 OUTPUT_FILENAME = "Processed_" + FILENAME
 
@@ -22,9 +26,12 @@ Lines = file1.readlines()
  
 all_text = []
 count = 0
+
+# TODO - only process files w .vtt extension 
+
 # Strips the newline character
 # TODO remove the first line - WEBVTT - 
-#  also doesnt cope with `..` or ulrs eg `xyz.com` in original transcript
+#  also doesnt cope with `..` or ulrs eg `xyz.com` in original transcript  - maybe serach for `x. ` ie extra space at end?
 for line in Lines:
 	# nothing is being matched here!
 	# x = re.findall("MY_REGEX", line)
@@ -58,7 +65,7 @@ print(all_text)
 cleaned_text = []
 for item in all_text:
 	cleaned = item.replace("\n", " ")
-	cleaned2 = cleaned.replace(".", ".\n")
+	cleaned2 = cleaned.replace(". ", ".\n")
 	cleaned_text.append(cleaned2)
 
 
